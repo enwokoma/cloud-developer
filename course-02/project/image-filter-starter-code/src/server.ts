@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 require('dotenv').config();
-import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import {filterImageFromURL, deleteLocalFiles, isValidImage} from './util/util';
 
 (async () => {
 
@@ -18,9 +18,15 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   app.get("/filteredimage", async (req, res) => {
     try {
       let { image_url } = req.query;
+
       if (!image_url) {
         return res.status(400)
             .send('A valid image url is required!')
+      }
+
+      if (!isValidImage(image_url)) {
+        return res.status(422)
+            .send({ error: 'image_url is not a valid image' })
       }
 
       const filteredImage = await filterImageFromURL(image_url.toString())

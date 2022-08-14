@@ -37,3 +37,12 @@ export async function deleteLocalFiles(files: Array<string>) {
     fs.unlinkSync(file);
   }
 }
+
+// isValidImage
+// check if the image is a valid image format
+// useful to make sure image format is valid
+// INPUTS
+//    imageLink: string - a publicly accessible url to an image file
+export const isValidImage = (imageLink: string) => {
+  return imageLink.match(/\.(jpeg|jpg|gif|png)$/)
+}
