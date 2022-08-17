@@ -29,7 +29,7 @@ import {filterImageFromURL, deleteLocalFiles, isValidImage} from './util/util';
             .send({ error: 'image_url is not a valid image' })
       }
 
-      const filteredImage = await filterImageFromURL(image_url.toString())
+      const filteredImage = await filterImageFromURL(image_url)
       res.status(200)
           .sendFile(filteredImage)
       res.on('finish', () => deleteLocalFiles([filteredImage]));
